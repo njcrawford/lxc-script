@@ -1,0 +1,51 @@
+#!/bin/bash
+
+set -e
+set -u
+
+function PrintUsage ()
+{
+	echo "Usage: ${0} {start|stop} containername"
+	echo "       ${0} ls (active|fancy)"
+	exit 1
+}
+
+
+if [ "$#" -eq 0 ]; then
+	PrintUsage
+fi
+
+case ${1} in
+"start")
+	if [ "$#" -gt 1 ]; then
+		lxc-start -d -n ${2}
+	else
+		PrintUsage
+	fi
+	;;
+"stop")
+	if [ "$#" -gt 1 ]; then
+		lxc-stop -n ${2}
+	else
+		PrintUsage
+	fi
+	;;
+"ls")
+	if [ "$#" -gt 1 ]; then
+		case ${2} in
+		"active")
+			lxc-ls --active
+			;;
+		"fancy")
+			lxc-ls --fancy
+			;;
+		esac
+	else
+		lxc-ls
+	fi
+	;;
+*)
+	PrintUsage
+	;;
+esac
+
