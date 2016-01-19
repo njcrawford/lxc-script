@@ -5,8 +5,8 @@ set -u
 
 function PrintUsage ()
 {
-	echo "Usage: ${0} {start|stop} containername"
-	echo "       ${0} ls (active|fancy)"
+	echo "Usage: ${0} {start|shutdown} containername"
+	echo "       ${0} list (--all)"
 	exit 1
 }
 
@@ -23,25 +23,25 @@ case ${1} in
 		PrintUsage
 	fi
 	;;
-"stop")
+"shutdown")
 	if [ "$#" -gt 1 ]; then
 		lxc-stop -n ${2}
 	else
 		PrintUsage
 	fi
 	;;
-"ls")
+"list")
 	if [ "$#" -gt 1 ]; then
 		case ${2} in
-		"active")
-			lxc-ls --active
-			;;
-		"fancy")
+		"--all")
 			lxc-ls --fancy
+			;;
+		case *)
+			PrintUsage
 			;;
 		esac
 	else
-		lxc-ls
+		lxc-ls --active --fancy
 	fi
 	;;
 *)

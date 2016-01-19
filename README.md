@@ -1,2 +1,2 @@
 # lxc-script
-Convenience script to convert lxc-* commands to something I can remember more easily
+Convenience script to convert lxc-* commands to something more like virsh
